@@ -1,0 +1,22 @@
+RESPONSES_LIST="`curl http://epbyminw1499:4567/available_users`"
+
+responses=$(echo $RESPONSES_LIST | tr "," "\n")
+
+/usr/libexec/PlistBuddy -c "Delete :PreferenceSpecifiers:0:Titles" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Titles array" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Titles:0 string Production" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Titles:1 string Testing" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Titles:2 string Simulation" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Delete :PreferenceSpecifiers:0:Values" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Values array" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Values:0 string https://tc.mobile.yandex.net" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Values:1 string https://tc.tst.mobile.yandex.net" "$PROJECT_DIR/Settings.bundle/Root.plist"
+/usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Values:2 string http://taxi-sim-server.appspot.com/taxisimserver" "$PROJECT_DIR/Settings.bundle/Root.plist"
+
+COUNTER=3
+for r in $responses
+do
+   /usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Titles:$COUNTER string $r" "$PROJECT_DIR/Settings.bundle/Root.plist"
+   /usr/libexec/PlistBuddy -c "Add :PreferenceSpecifiers:0:Values:$COUNTER string $r" "$PROJECT_DIR/Settings.bundle/Root.plist"
+   COUNTER=COUNTER+1
+done
