@@ -1,1 +1,5 @@
-test data!
+<startup>
+  <app min_app_version="100" cur_app_version="100"/>
+  <uuid>c0ec231e2b93cb0b7604bb4cd…</uuid>
+  <deviceid>54c6ce9a4d9c30ba3d3778157…</deviceid>
+</startup>
